@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasan Kiyani | Computer Vision Engineer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg0: #1e2736;
+            --bg1: #24303f;
+            --bg2: #2a3847;
+            --card: rgba(15, 20, 32, 0.8);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-2: rgba(255, 255, 255, 0.12);
+
+            --text: #f5f7fa;
+            --text-2: #c5cdd7;
+            --text-3: #8a95a8;
+            --muted: #6e7a8a;
+
+            --primary: #2e9fb5;
+            --primary-2: rgba(46, 159, 181, 0.12);
+            --primary-b: rgba(46, 159, 181, 0.32);
+
+            --secondary: #c9a961;
+            --secondary-2: rgba(201, 169, 97, 0.12);
+            --secondary-b: rgba(201, 169, 97, 0.32);
+
+            --accent: #c9a961;
+            --accent-2: rgba(201, 169, 97, 0.12);
+            --accent-b: rgba(201, 169, 97, 0.32);
+
+            --accent-neon: #39ff14;
+            --accent-neon-dim: rgba(57, 255, 20, 0.12);
+
+            --tertiary: #a78bfa;
+            --tertiary-2: rgba(167, 139, 250, 0.10);
+
+            --success: #42f5c5;
+            --success-dim: rgba(66, 245, 197, 0.14);
+            --success-b: rgba(66, 245, 197, 0.32);
+
+            --shadow: 0 22px 58px rgba(0, 0, 0, 0.35);
+            --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg0);
+            background-image:
+                radial-gradient(ellipse 90% 65% at 10% 0%, rgba(88, 196, 220, 0.05) 0%, transparent 55%),
+                radial-gradient(ellipse 70% 55% at 100% 12%, rgba(167, 139, 250, 0.035) 0%, transparent 50%),
+                radial-gradient(ellipse 70% 55% at 60% 100%, rgba(229, 168, 75, 0.025) 0%, transparent 45%),
+                linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 40%, var(--bg0) 100%);
+            background-attachment: fixed;
+            color: var(--text);
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        a { color: inherit; }
+        img { max-width: 100%; display: block; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 26px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.25s var(--ease-spring), background-color 0.22s ease, color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            white-space: nowrap;
+        }
+
+        .btn:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, #279aad 100%);
+            color: #ffffff;
+            box-shadow: 0 8px 26px rgba(46, 159, 181, 0.18);
+        }
+        .btn-primary:hover {
+            filter: brightness(1.08);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 14px 34px rgba(46, 159, 181, 0.26), 0 0 20px rgba(57, 255, 20, 0.05);
+        }
+
+        .btn-secondary {
+            background: rgba(46, 159, 181, 0.08);
+            color: var(--primary);
+            border: 1px solid rgba(46, 159, 181, 0.35);
+        }
+        .btn-secondary:hover {
+            background: rgba(46, 159, 181, 0.16);
+            border-color: var(--primary);
+            transform: translateY(-1px) scale(1.02);
+            box-shadow: 0 4px 12px rgba(46, 159, 181, 0.12), 0 0 15px rgba(57, 255, 20, 0.04);
+        }
+
+        .btn-accent {
+            background: var(--accent-2);
+            color: var(--accent);
+            border: 1px solid var(--accent-b);
+        }
+        .btn-accent:hover {
+            background: rgba(201, 169, 97, 0.18);
+            border-color: var(--accent);
+            transform: translateY(-1px) scale(1.02);
+            box-shadow: 0 4px 12px rgba(201, 169, 97, 0.12);
+        }
+
+        .btn-ghost {
+            color: var(--text-2);
+            background: transparent;
+        }
+        .btn-ghost:hover {
+            color: var(--text);
+            transform: scale(1.02);
+        }
+
+        /* ============================================
+           3-COLUMN LAYOUT (sticky sidebars)
+           ============================================ */
+        .layout {
+            display: grid;
+            grid-template-columns: 420px minmax(0, 2.1fr) 420px;
+            gap: 32px;
+            max-width: 1920px;
+            margin: 40px auto 0;
+            padding: 40px 24px 60px;
+        }
+
+        .panel {
+            background: var(--card);
+            border: 1px solid rgba(201, 169, 97, 0.12);
+            border-radius: 16px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.03) inset, 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .sidebar.panel {
+            border: none;
+            background: transparent;
+            box-shadow: none;
+            padding-right: 0;
+        }
+
+        .sidebar.left {
+            margin-right: 32px;
+            border-right: 2.5px solid rgba(201, 169, 97, 0.40);
+            padding-right: 32px;
+        }
+
+        .sticky {
+            position: sticky;
+            top: 40px;
+            align-self: start;
+            overflow: visible;
+        }
+
+        .sidebar {
+            padding: 22px 20px;
+        }
+
+        .sidebar h2 {
+            margin: 0 0 14px 0;
+            font-size: 0.9rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+        }
+
+        .profile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .avatar {
+            width: 220px;
+            height: 220px;
+            border-radius: 999px;
+            border: 2px solid #c9a961;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(46,159,181,0.16), rgba(167,139,250,0.12));
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .name {
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin: 4px 0 0 0;
+            font-size: 1.08rem;
+        }
+
+        .role {
+            margin: 4px 0 0 0;
+            color: var(--text-2);
+            font-weight: 600;
+            font-size: 0.92rem;
+            text-align: center;
+        }
+
+        .left .role {
+            display: none;
+        }
+
+        .skills-mini-title {
+            margin: 22px 0 12px 0;
+            font-size: 0.85rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text);
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 900;
+            text-align: left;
+        }
+
+        .bio {
+            display: none;
+        }
+
+        .meta {
+            display: none;
+        }
+
+        .meta-line {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            font-size: 0.85rem;
+            color: var(--muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .meta-line strong {
+            color: var(--text-2);
+            font-weight: 700;
+        }
+
+        .contact-row {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            margin-top: 36px;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .link-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(201, 169, 97, 0.28);
+            background: rgba(201, 169, 97, 0.04);
+            color: var(--text-2);
+            text-decoration: none;
+            transition: transform 0.2s var(--ease-spring), border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .link-pill:hover {
+            transform: translateY(-2px);
+            border-color: #c9a961;
+            background: rgba(201, 169, 97, 0.08);
+            color: var(--text);
+            box-shadow: 0 0 12px rgba(201, 169, 97, 0.1);
+        }
+
+        .link-pill svg {
+            width: 16px;
+            height: 16px;
+            flex: 0 0 auto;
+        }
+
+        .btn-resume {
+            padding: 11px 20px;
+            border-radius: 999px;
+        }
+
+        main {
+            min-width: 0;
+        }
+
+        main .panel {
+            border: 2px solid rgba(201, 169, 97, 0.16);
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.03) inset, 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .top-meta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--muted);
+            margin-bottom: 10px;
+        }
+
+        .hero {
+            padding: 52px 26px 56px;
+        }
+
+        .hero-top {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        h1 {
+            margin: 0 0 16px 0;
+            font-size: clamp(1.55rem, 2.2vw, 2.05rem);
+            letter-spacing: -0.03em;
+            font-weight: 850;
+            line-height: 1.2;
+            color: var(--text);
+        }
+
+        .intro {
+            margin: 10px 0 14px 0;
+            color: var(--text-2);
+            line-height: 1.7;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+
+        /* ============================================
+           PROJECT GRID (2x2, responsive)
+           ============================================ */
+        .section {
+            margin-top: 68px;
+            padding: 18px;
+        }
+
+        .section-title {
+            margin: 0 0 28px 0;
+            font-size: 1.15rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #f5f7fa;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 800;
+            text-align: center;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1.5px solid rgba(201, 169, 97, 0.18);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.22s var(--ease-spring), box-shadow 0.22s ease, border-color 0.22s ease;
+            display: grid;
+            grid-template-rows: 190px 1fr;
+            min-height: 360px;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 22px 58px rgba(0, 0, 0, 0.35), 0 0 30px rgba(46, 159, 181, 0.1);
+            border-color: #2e9fb5;
+        }
+
+        .card-media {
+            background: linear-gradient(135deg, rgba(46, 159, 181, 0.08), rgba(201, 169, 97, 0.05));
+            border-bottom: 1px solid var(--border);
+            display: grid;
+            place-items: center;
+        }
+
+        .card-media .label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--muted);
+            padding: 10px 12px;
+            text-align: center;
+        }
+
+        .card-body {
+            padding: 14px 14px 16px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .card h3 {
+            margin: 0;
+            font-size: 1.05rem;
+            letter-spacing: -0.015em;
+            line-height: 1.25;
+        }
+
+        .readtime {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            white-space: nowrap;
+        }
+
+        .desc {
+            margin: 0;
+            color: var(--text-2);
+            font-size: 0.92rem;
+            line-height: 1.55;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 6px;
+        }
+
+        .card-actions .btn {
+            padding: 11px 14px;
+            font-size: 0.88rem;
+            border-radius: 12px;
+        }
+
+        /* ============================================
+           RIGHT SIDEBAR SKILLS DASHBOARD
+           ============================================ */
+        .skill-group {
+            margin-bottom: 18px;
+        }
+
+        .skill-group-title {
+            margin: 0 0 10px;
+            font-size: 0.9rem;
+            color: var(--text);
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .tag {
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.78rem;
+            font-weight: 500;
+            padding: 6px 11px;
+            border-radius: 999px;
+            background: rgba(46, 159, 181, 0.20);
+            border: 1.5px solid rgba(46, 159, 181, 0.55);
+            color: #f5f7fa;
+            transition: all 0.2s ease;
+        }
+
+        .tag:hover {
+            background: rgba(46, 159, 181, 0.28);
+            border-color: #2e9fb5;
+            box-shadow: 0 0 12px rgba(46, 159, 181, 0.18);
+        }
+
+        .tag.primary,
+        .tag.accent,
+        .tag.tertiary {
+            border-color: rgba(46, 159, 181, 0.55);
+            background: rgba(46, 159, 181, 0.20);
+            color: #f5f7fa;
+        }
+
+        /* ============================================
+           RIGHT SIDEBAR — EXPERIENCE & EDUCATION
+           ============================================ */
+        .timeline-title {
+            margin: 0 0 16px 0;
+            font-size: 0.9rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 800;
+        }
+
+        .timeline {
+            display: grid;
+            gap: 24px;
+            position: relative;
+            padding-left: 8px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 18px;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, rgba(46, 159, 181, 0.4), rgba(201, 169, 97, 0.25));
+            border-radius: 999px;
+        }
+
+        .timeline-item {
+            border-radius: 14px;
+            border: 1.5px solid rgba(201, 169, 97, 0.22);
+            background: rgba(15, 20, 32, 0.5);
+            padding: 16px 16px 16px 16px;
+            display: grid;
+            grid-template-columns: 20px 1fr;
+            gap: 14px;
+            align-items: start;
+            transition: all 0.3s ease;
+            animation: slideIn 0.6s ease forwards;
+            opacity: 0;
+            transform: translateX(-10px);
+        }
+
+        .timeline-item:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .timeline-item:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        .timeline-item:hover {
+            border-color: rgba(46, 159, 181, 0.5);
+            background: rgba(15, 20, 32, 0.65);
+            box-shadow: 0 4px 16px rgba(46, 159, 181, 0.08);
+            transform: translateX(4px);
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .timeline-dot {
+            width: 18px;
+            height: 18px;
+            border-radius: 999px;
+            margin-top: 2px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .timeline-item:hover .timeline-dot {
+            transform: scale(1.3);
+            box-shadow: 0 0 0 6px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Different palette than site accents (pink + mint) */
+        .timeline-item.pm .timeline-dot {
+            background: #ff4d8d;
+            box-shadow: 0 0 0 6px rgba(255, 77, 141, 0.18);
+        }
+
+        .timeline-item.pm:hover .timeline-dot {
+            box-shadow: 0 0 0 8px rgba(255, 77, 141, 0.24);
+        }
+
+        .timeline-item.ee .timeline-dot {
+            background: #42f5c5;
+            box-shadow: 0 0 0 6px rgba(66, 245, 197, 0.18);
+        }
+
+        .timeline-item.ee:hover .timeline-dot {
+            box-shadow: 0 0 0 8px rgba(66, 245, 197, 0.24);
+        }
+
+        .timeline-item .when {
+            font-family: 'JetBrains Mono', monospace;
+            color: rgba(238, 242, 246, 0.85);
+            font-size: 0.78rem;
+            margin: 0 0 6px 0;
+        }
+
+        .timeline-item .what {
+            font-weight: 850;
+            letter-spacing: -0.015em;
+            margin: 0 0 4px 0;
+            color: var(--text);
+            font-size: 0.96rem;
+        }
+
+        .timeline-item .where {
+            margin: 0;
+            color: var(--text-2);
+            font-size: 0.88rem;
+            line-height: 1.5;
+        }
+
+        /* ============================================
+           RESPONSIVE
+           - Sidebars collapse into stacked panels
+           ============================================ */
+        @media (max-width: 1100px) {
+            .layout { grid-template-columns: 340px minmax(0, 1fr); }
+            .right { display: none; }
+        }
+
+        @media (max-width: 860px) {
+            .layout { grid-template-columns: 1fr; }
+            .sticky { position: static; max-height: none; overflow: visible; }
+            .hero-top { grid-template-columns: 1fr; }
+            .grid { grid-template-columns: 1fr; }
+            .contact-row { flex-direction: column; align-items: stretch; margin-top: 28px; }
+            .contact-links { justify-content: flex-start; }
+        }
+
+        @media (max-width: 768px) {
+            .layout { padding: 18px 14px 50px; margin-top: 20px; }
+            .sidebar { padding: 16px; }
+            .hero, .section { padding: 16px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * { scroll-behavior: auto; }
+            .btn, .card, .link-pill { transition: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="layout">
+        <!-- LEFT SIDEBAR (sticky) -->
+        <aside class="panel sidebar sticky left" aria-label="Profile sidebar">
+            <div class="profile">
+                <div class="avatar">
+                    <!-- Profile picture: replace src with your preferred photo if needed -->
+                    <img src="IMG_20240923_173312-2.jpg" alt="Hasan Kiyani profile picture">
+                </div>
+                <div>
+                    <p class="name">Hasan Kiyani</p>
+                    <p class="role">Computer Vision Engineer</p>
+                </div>
+            </div>
+
+            <p class="bio">
+            </p>
+
+            <div class="skills-mini-title">Tech Skills</div>
+            <div class="skill-group">
+                <p class="skill-group-title">Programming</p>
+                <div class="tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">C++</span>
+                    <span class="tag">SQL</span>
+                </div>
+            </div>
+            <div class="skill-group">
+                <p class="skill-group-title">Computer Vision</p>
+                <div class="tags">
+                    <span class="tag">YOLO</span>
+                    <span class="tag">OpenCV</span>
+                    <span class="tag">PyTorch</span>
+                    <span class="tag">FaceNet</span>
+                </div>
+            </div>
+            <div class="skill-group">
+                <p class="skill-group-title">Systems</p>
+                <div class="tags">
+                    <span class="tag">Docker</span>
+                    <span class="tag">FFmpeg</span>
+                    <span class="tag">Linux</span>
+                    <span class="tag">Edge AI Deployment</span>
+                </div>
+            </div>
+            <div class="skill-group" style="margin-bottom: 0;">
+                <p class="skill-group-title">Robotics</p>
+                <div class="tags">
+                    <span class="tag">ROS</span>
+                    <span class="tag">SLAM</span>
+                    <span class="tag">Drone Mapping</span>
+                </div>
+            </div>
+
+            <div class="contact-row" aria-label="Resume and contact links">
+                <div class="contact-links">
+                    <a class="link-pill" href="https://github.com/hasankiyani007" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.73.5.75 5.66.75 12.11c0 5.17 3.16 9.55 7.55 11.1.55.1.75-.25.75-.55v-2.05c-3.07.69-3.72-1.35-3.72-1.35-.5-1.34-1.22-1.7-1.22-1.7-1-.7.08-.68.08-.68 1.1.08 1.68 1.17 1.68 1.17.98 1.72 2.57 1.22 3.2.93.1-.73.38-1.22.69-1.5-2.45-.29-5.03-1.26-5.03-5.6 0-1.24.43-2.25 1.14-3.05-.12-.29-.5-1.48.11-3.08 0 0 .93-.3 3.05 1.16a10.2 10.2 0 0 1 2.78-.39c.94 0 1.88.13 2.78.39 2.12-1.46 3.05-1.16 3.05-1.16.61 1.6.23 2.79.11 3.08.71.8 1.14 1.81 1.14 3.05 0 4.35-2.59 5.31-5.06 5.59.39.35.74 1.05.74 2.12v3.14c0 .3.2.65.76.55 4.38-1.55 7.54-5.93 7.54-11.1C23.25 5.66 18.27.5 12 .5Z\"/></svg>
+                        <span>GitHub</span>
+                    </a>
+                    <a class="link-pill" href="https://www.linkedin.com/in/hasan-kiyani-490576294" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45H16.9v-5.58c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.15 1.45-2.15 2.95v5.67H9.34V9h3.4v1.56h.05c.47-.9 1.63-1.85 3.35-1.85 3.58 0 4.25 2.36 4.25 5.43v6.31ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.11 20.45H3.57V9h3.54v11.45Z\"/></svg>
+                        <span>LinkedIn</span>
+                    </a>
+                    <a class="link-pill" href="mailto:hasankiyani001@gmail.com" aria-label="Email">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2Zm-.4 4.25-7.2 4.5c-.26.16-.55.25-.85.25s-.59-.09-.85-.25l-7.2-4.5V6.5l8.05 5.03L19.6 6.5v1.75Z\"/></svg>
+                        <span>Email</span>
+                    </a>
+                </div>
+                <a href="Hasan_Resume_CV.pdf" class="btn btn-accent btn-resume" target="_blank" rel="noopener noreferrer">Download Resume</a>
+            </div>
+
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main>
+            <div class="top-meta">Updated March 16, 2026 • Portfolio overview — 3 minute read</div>
+            <section class="panel hero" aria-label="Hero content">
+                <div class="hero-top">
+                    <div>
+                        <h1>Hasan Kiyani — Computer Vision Engineer</h1>
+                        <p class="intro">
+                            Computer vision engineer focused on real-time video analytics, edge AI deployment, and large-scale vision systems. Experience building end-to-end pipelines including detection, tracking, inference optimization, and edge deployments.
+                        </p>
+                        <p class="intro" style="margin-top: 4px; font-size: 0.9rem;">
+                            Skills: YOLOv8, OpenCV, PyTorch, Docker, FFmpeg, Linux, project scoping & scheduling, documentation, risk management.
+                        </p>
+
+                        <div class="hero-actions">
+                            <a href="#projects" class="btn btn-primary">View Projects</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="projects" class="panel section" aria-label="Projects">
+                <h2 class="section-title">Projects</h2>
+
+                <div class="grid">
+                    <!-- 1) PPE Detection -->
+                    <article class="card">
+                        <div class="card-media">
+                            <div class="label">
+                                <!-- Preview image or small demo video goes here -->
+                                <!-- Example: <img src=\"assets/ppe-preview.png\" alt=\"PPE system preview\"> -->
+                                Preview (image/video)
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-top">
+                                <h3>PPE Detection System</h3>
+                                <span class="readtime">4 min read</span>
+                            </div>
+                            <p class="desc">Real-time construction safety monitoring using detection, tracking, and rule-based violation logic.</p>
+                            <div class="card-actions">
+                                <a href="projects/ppe-detection.html" class="btn btn-primary">View Case Study</a>
+                                <a href="https://github.com/hasankiyani007/PPE_model_v1" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 2) Hikvision Edge -->
+                    <article class="card">
+                        <div class="card-media">
+                            <div class="label">Preview (image/video)</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-top">
+                                <h3>Hikvision Edge Deployment</h3>
+                                <span class="readtime">3 min read</span>
+                            </div>
+                            <p class="desc">Offline installer and deployment package for running inference pipelines on Hikvision edge devices.</p>
+                            <div class="card-actions">
+                                <a href="projects/hikvision-edge.html" class="btn btn-primary">View Case Study</a>
+                                <a href="https://github.com/hasankiyani007" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 3) Drone Mapping -->
+                    <article class="card">
+                        <div class="card-media">
+                            <div class="label">Preview (image/video)</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-top">
+                                <h3>Autonomous 3D Drone Mapping</h3>
+                                <span class="readtime">5 min read</span>
+                            </div>
+                            <p class="desc">Drone-based SLAM system for autonomous 3D environment mapping and navigation integration.</p>
+                            <div class="card-actions">
+                                <a href="projects/drone-mapping.html" class="btn btn-primary">View Case Study</a>
+                                <a href="https://github.com/hasankiyani007" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 4) Face Recognition -->
+                    <article class="card">
+                        <div class="card-media">
+                            <div class="label">Preview (image/video)</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-top">
+                                <h3>Face Recognition Pipeline</h3>
+                                <span class="readtime">3 min read</span>
+                            </div>
+                            <p class="desc">Face embedding and identity verification pipeline using deep embeddings and similarity matching.</p>
+                            <div class="card-actions">
+                                <a href="projects/face-recognition.html" class="btn btn-primary">View Case Study</a>
+                                <a href="https://github.com/hasankiyani007/face-recognition" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </main>
+
+        <!-- RIGHT SIDEBAR (sticky) -->
+        <aside class="panel sidebar sticky right" aria-label="Experience and education">
+            <div class="timeline-title">Experience & Education</div>
+            <div class="timeline">
+                <div class="timeline-item pm">
+                    <div class="timeline-dot" aria-hidden="true"></div>
+                    <div>
+                        <p class="when">Sep 2025 – Jul 2026 (ongoing)</p>
+                        <p class="what">Master’s — Project Management</p>
+                        <p class="where">Focus on delivery systems: scope, schedule, documentation, and risk management.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item ee">
+                    <div class="timeline-dot" aria-hidden="true"></div>
+                    <div>
+                        <p class="when">Sep 2021 – Jul 2025</p>
+                        <p class="what">Bachelor’s — Electrical Engineering</p>
+                        <p class="where">Foundations in signals, systems, and hardware-aware engineering.</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+</body>
+</html>
