@@ -15,7 +15,7 @@
             --bg-dark: #15191f;
             --card: rgba(15, 20, 32, 0.6);
             --border: rgba(201, 169, 97, 0.15);
-            --text: #f5f7fa;
+            --text: #ffffff;
             --text-dim: #c5cdd7;
             --primary: #2e9fb5;
             --accent: #c9a961;
@@ -73,12 +73,13 @@
         }
 
         .hero h1 {
-            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
             font-weight: 850;
             letter-spacing: -0.02em;
             margin-bottom: 12px;
             line-height: 1.1;
             color: var(--text);
+            text-align: left;
         }
 
         .hero-sub {
@@ -495,17 +496,6 @@
             <p class="hero-sub">Real-time SLAM-based autonomous mapping with AI-enhanced 3D human detection for large-scale environments.</p>
         </section>
 
-        <!-- VIDEO HERO -->
-        <div class="video-container">
-            <iframe width="560" height="315"
-                src="https://www.youtube.com/embed/UD5HsTL1s7s?modestbranding=1&rel=0&controls=1"
-                title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen>
-            </iframe>
-        </div>
-
         <!-- PROBLEM STATEMENT -->
         <section class="section">
             <h2 class="section-title">Problem</h2>
@@ -514,6 +504,17 @@
                 <p>Traditional SLAM systems map environments but lack semantic understanding. This system bridges that gap by integrating AI-driven human detection into the 3D mapping pipeline, enabling truly intelligent autonomous navigation and situational awareness.</p>
             </div>
         </section>
+
+        <!-- VIDEO HERO -->
+        <div class="video-container">
+            <iframe width="560" height="315"
+                src="https://www.youtube.com/embed/UD5HsTL1s7s?modestbranding=1&rel=0&controls=1&vq=high"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+            </iframe>
+        </div>
 
         <!-- KEY METRICS -->
         <section class="section">
