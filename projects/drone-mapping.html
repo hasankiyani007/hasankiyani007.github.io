@@ -496,26 +496,14 @@
         </section>
 
         <!-- VIDEO HERO -->
-        <div class="video-container" id="videoRoot">
-            <iframe id="projectVideo" width="560" height="315"
-                data-src="https://www.youtube.com/embed/M7lc1UVf-VE?modestbranding=1&rel=0&controls=1"
+        <div class="video-container">
+            <iframe width="560" height="315"
+                src="https://www.youtube.com/embed/UD5HsTL1s7s?modestbranding=1&rel=0&controls=1"
                 title="YouTube video player"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen>
             </iframe>
-
-            <div class="video-overlay" id="videoOverlay">
-                <p id="videoOverlayMessage">Video playback can be blocked in some networks or by browser policies. Use the buttons below to load it or open directly.</p>
-                <p id="videoOverlayWarning" style="display:none;margin-top:16px;font-size:0.9rem;color:rgba(255,200,100,0.9);">
-                    ⚠️ The page is being opened from <code>file://</code>, and many browsers block embedded YouTube videos in that mode.
-                    Run <code>python -m http.server</code> in this folder, then open <code>http://localhost:8000/projects/drone-mapping.html</code>.
-                </p>
-                <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
-                    <button class="btn" id="loadVideoBtn" type="button">Load Video</button>
-                    <a class="btn btn-secondary" href="https://www.youtube.com/watch?v=M7lc1UVf-VE" target="_blank" rel="noopener noreferrer">Open on YouTube</a>
-                </div>
-            </div>
         </div>
 
         <!-- PROBLEM STATEMENT -->
@@ -671,33 +659,5 @@
             <p>© 2026 Hasan Kiyani • Computer Vision Engineer</p>
         </div>
     </div>
-
-    <script>
-        const loadBtn = document.getElementById('loadVideoBtn');
-        const overlay = document.getElementById('videoOverlay');
-        const iframe = document.getElementById('projectVideo');
-        const warning = document.getElementById('videoOverlayWarning');
-        const overlayMessage = document.getElementById('videoOverlayMessage');
-
-        const isFileProtocol = window.location.protocol === 'file:';
-
-        if (isFileProtocol && warning) {
-            warning.style.display = 'block';
-            overlayMessage.textContent = 'You are viewing this page from a local file. Embedded YouTube videos often fail under file:// in many browsers.';
-            if (loadBtn) {
-                loadBtn.disabled = true;
-                loadBtn.textContent = 'Serve over HTTP to load video';
-            }
-        }
-
-        if (loadBtn && overlay && iframe) {
-            loadBtn.addEventListener('click', () => {
-                if (!iframe.src) {
-                    iframe.src = iframe.dataset.src;
-                }
-                overlay.style.display = 'none';
-            });
-        }
-    </script>
 </body>
 </html>
